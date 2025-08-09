@@ -8,10 +8,10 @@ const path = require('path');
 exports.showAllPosts = async (req, res) => {
     try {
         const { rows: posts } = await pool.query(`
-            SELECT Posts.id, Posts.title, Posts."featuredImage", Users.username
-            FROM Posts
-            INNER JOIN Users ON Posts."UserId" = Users.id
-            ORDER BY Posts."createdAt" DESC;
+            SELECT "Posts".id, "Posts".title, "Posts"."featuredImage", "Users".username
+            FROM "Posts"
+            INNER JOIN "Users" ON "Posts"."UserId" = "Users".id
+            ORDER BY "Posts"."createdAt" DESC;
         `);
         res.render('home', { posts: posts });
     } catch (error) {
@@ -39,21 +39,17 @@ exports.createPost = async (req, res) => {
     }
 
     try {
-        // 从内存中获取文件名和文件 buffer
         const filename = req.file.originalname;
         const fileBuffer = req.file.buffer;
 
-        // 上传文件到 Vercel Blob
         const blob = await put(`articles/${Date.now()}-${filename}`, fileBuffer, {
             access: 'public',
         });
 
-        // 从 Vercel Blob 获取公开可访问的 URL
         const imageUrl = blob.url;
 
-        // 使用参数化查询将文章数据和图片 URL 存入数据库
         await pool.query(
-            'INSERT INTO Posts (title, content, "featuredImage", "UserId", "createdAt", "updatedAt") VALUES ($1, $2, $3, $4, NOW(), NOW())',
+            'INSERT INTO "Posts" (title, content, "featuredImage", "UserId", "createdAt", "updatedAt") VALUES ($1, $2, $3, $4, NOW(), NOW())',
             [title, content, imageUrl, userId]
         );
 
@@ -71,9 +67,8 @@ exports.showPostDetail = async (req, res) => {
     try {
         const postId = req.params.id;
         
-        // 使用参数化查询获取文章详情
         const { rows } = await pool.query(
-            'SELECT Posts.title, Posts.content, Posts."featuredImage", Posts."createdAt", Users.username FROM Posts INNER JOIN Users ON Posts."UserId" = Users.id WHERE Posts.id = $1',
+            'SELECT "Posts".title, "Posts".content, "Posts"."featuredImage", "Posts"."createdAt", "Users".username FROM "Posts" INNER JOIN "Users" ON "Posts"."UserId" = "Users".id WHERE "Posts".id = $1',
             [postId]
         );
 
