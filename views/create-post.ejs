@@ -1,0 +1,27 @@
+<%- include('partials/header') %>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h2>撰写新文章</h2>
+        <hr>
+        <!-- 表单需要 enctype="multipart/form-data" 来支持文件上传 -->
+        <form action="/post/new" method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="title" class="form-label">文章标题</label>
+                <input type="text" class="form-control" id="title" name="title" placeholder="给你的文章起个名字" required>
+            </div>
+            <div class="mb-3">
+                <label for="content" class="form-label">文章内容</label>
+                <textarea class="form-control" id="content" name="content" rows="10" placeholder="在这里写下你的想法..." required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="featuredImage" class="form-label">特色图片</label>
+                <input class="form-control" type="file" id="featuredImage" name="featuredImage" required>
+                <div class="form-text">选择一张有吸引力的图片作为文章封面。</div>
+            </div>
+            <button type="submit" class="btn btn-primary">立即发布</button>
+        </form>
+    </div>
+</div>
+
+<%- include('partials/footer') %>
