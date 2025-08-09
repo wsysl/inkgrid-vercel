@@ -9,6 +9,7 @@
   "author": "Gemini AI",
   "license": "ISC",
   "dependencies": {
+    "@vercel/blob": "^1.1.1",
     "@vercel/postgres": "^0.8.0",
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.4.5",
