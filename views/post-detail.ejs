@@ -2,10 +2,8 @@
 
 <div class="row justify-content-center">
     <div class="col-lg-8">
-        <%# 【已修改】: 使用 if 判断，如果文章有图片才显示 %>
-        <% if (post.featuredImage) { %>
-            <img src="<%= post.featuredImage %>" class="img-fluid rounded mb-4" alt="<%= post.title %>">
-        <% } %>
+        <%# 【已修改】: 同样使用 || 逻辑来提供默认图片 %>
+        <img src="<%= post.featuredImage || '/images/default-image.jpg' %>" class="img-fluid rounded mb-4" alt="<%= post.title %>">
         
         <h1 class="mb-3"><%= post.title %></h1>
 

@@ -6,13 +6,8 @@
             <div class="col-md-4 mb-4">
                 <div class="card h-100">
                     <a href="/post/<%= post.id %>">
-                        <%# 【已修改】: 使用 if/else 判断是否有图片 %>
-                        <% if (post.featuredImage) { %>
-                            <img src="<%= post.featuredImage %>" class="card-img-top" alt="<%= post.title %>" style="height: 200px; object-fit: cover;">
-                        <% } else { %>
-                            <%# 如果没有图片，显示一个灰色占位图 %>
-                            <img src="https://via.placeholder.com/400x250.png?text=No+Image" class="card-img-top" alt="No image available" style="height: 200px; object-fit: cover;">
-                        <% } %>
+                        <%# 【已修改】: 如果 post.featuredImage 存在，就用它；否则，使用我们自己的默认图片 %>
+                        <img src="<%= post.featuredImage || '/images/default-image.jpg' %>" class="card-img-top" alt="<%= post.title %>" style="height: 200px; object-fit: cover;">
                     </a>
                     <div class="card-body">
                         <h5 class="card-title"><a href="/post/<%= post.id %>" class="text-dark text-decoration-none"><%= post.title %></a></h5>
