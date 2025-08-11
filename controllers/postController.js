@@ -27,23 +27,36 @@ exports.showCreateForm = (req, res) => {
 };
 
 /**
- * 处理创建新文章的逻辑
+ * 【已修改】处理创建新文章的逻辑 (图片可选)
  */
 exports.createPost = async (req, res) => {
     const { title, content } = req.body;
     const userId = req.user.id;
-    if (!req.file) {
-        return res.status(400).send('特色图片是必需的。');
-    }
+
+    // 1. 初始化 imageUrl 变量为 null
+    let imageUrl = null; 
+
     try {
-        const filename = req.file.originalname;
-        const fileBuffer = req.file.buffer;
-        const blob = await put(`articles/${Date.now()}-${filename}`, fileBuffer, { access: 'public' });
-        const imageUrl = blob.url;
+        // 2. 检查 req.file 是否存在。如果用户上传了图片，req.file 就会有值
+        if (req.file) {
+            const filename = req.file.originalname;
+            const fileBuffer = req.file.buffer;
+
+            // 上传文件到 Vercel Blob
+            const blob = await put(`articles/${Date.now()}-${filename}`, fileBuffer, {
+                access: 'public',
+            });
+            
+            // 只有在上传成功后，才给 imageUrl 赋值
+            imageUrl = blob.url; 
+        }
+
+        // 3. 将数据插入数据库。imageUrl 可能是 Vercel Blob 的 URL，也可能保持为 null
         await pool.query(
             'INSERT INTO "Posts" (title, content, "featuredImage", "UserId", "createdAt", "updatedAt") VALUES ($1, $2, $3, $4, NOW(), NOW())',
             [title, content, imageUrl, userId]
         );
+
         res.redirect('/');
     } catch (error) {
         console.error('文章发表或图片上传失败:', error);

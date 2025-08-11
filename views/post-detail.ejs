@@ -2,24 +2,20 @@
 
 <div class="row justify-content-center">
     <div class="col-lg-8">
-        <!-- 文章特色图片 -->
-        <img src="<%= post.featuredImage %>" class="img-fluid rounded mb-4" alt="<%= post.title %>">
+        <%# 【已修改】: 使用 if 判断，如果文章有图片才显示 %>
+        <% if (post.featuredImage) { %>
+            <img src="<%= post.featuredImage %>" class="img-fluid rounded mb-4" alt="<%= post.title %>">
+        <% } %>
         
-        <!-- 文章标题 -->
         <h1 class="mb-3"><%= post.title %></h1>
 
-        <!-- 文章元数据：作者和发布日期 -->
         <p class="text-muted">
             作者: <%= post.username %> | 发布于: <%= new Date(post.createdAt).toLocaleDateString('zh-CN') %>
         </p>
         
         <hr>
 
-        <!-- 文章内容 -->
         <div class="post-content">
-            <!-- 使用 <%- %> 而不是 <%= %> 来输出 HTML 内容，防止 EJS 转义 -->
-            <!-- 这里我们假设内容是纯文本，为了安全，默认使用 <%= %> 更佳。-->
-            <!-- 如果要支持富文本，需要对内容进行XSS净化处理 -->
             <p><%= post.content.replace(/\n/g, '<br>') %></p>
         </div>
 
