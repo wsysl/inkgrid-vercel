@@ -15,3 +15,32 @@
     max-height: 450px;
     object-fit: cover;
 }
+/* public/css/style.css */
+
+/* ... 你之前的其他自定义样式 ... */
+
+/* 
+ * -------------------------
+ * Digital Clock Styles
+ * -------------------------
+ */
+#digital-clock {
+    /* 字体样式 */
+    font-size: 1.6rem; /* 【显著增大字体】 */
+    font-weight: bold; /* 字体加粗 */
+    font-family: 'Courier New', Courier, monospace; /* 使用等宽字体，营造数字感 */
+    color: #00d9ff; /* 使用一种明亮的赛博朋克蓝色，非常醒目 */
+    
+    /* 视觉效果 */
+    padding: 0 15px; /* 增加左右内边距，让时钟不显得局促 */
+    letter-spacing: 2px; /* 增加字符间距 */
+    text-shadow: 0 0 5px rgba(0, 217, 255, 0.7), 0 0 10px rgba(0, 217, 255, 0.5); /* 【添加发光效果】 */
+    
+    /* 动画效果 (可选，但很酷) */
+    transition: color 0.3s, text-shadow 0.3s; /* 平滑过渡效果 */
+}
+
+#digital-clock:hover {
+    color: #ffffff; /* 鼠标悬停时变为白色 */
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 15px rgba(255, 255, 255, 0.6); /* 悬停时辉光变强 */
+}

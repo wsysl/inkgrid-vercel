@@ -20,6 +20,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
+      <!-- 左侧链接 (me-auto 会把它推到最左边) -->
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/">主页</a>
@@ -31,13 +32,15 @@
         <% } %>
       </ul>
       
-      <!-- Right-aligned nav items -->
-      <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
-        <!-- 【新增代码】: 电子时钟容器 -->
-        <li class="nav-item">
-          <span id="digital-clock" class="navbar-text text-white-50 me-3 fw-bold"></span>
-        </li>
+      <!-- 【修改点 1】: 在中间插入时钟容器 -->
+      <!-- 使用 d-flex 和 justify-content-center 来确保居中 -->
+      <div class="navbar-nav mx-auto">
+        <span id="digital-clock" class="navbar-text"></span>
+      </div>
 
+      <!-- 右侧链接 (ms-auto 会把它推到最右边) -->
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+        <!-- 【修改点 2】: 这里的时钟 li 已经被移除了 -->
         <% if (isAuthenticated) { %>
           <li class="nav-item">
             <span class="navbar-text me-3">欢迎, <%= currentUser.username %></span>
